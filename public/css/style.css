@@ -15,9 +15,10 @@
     text-shadow: #444 0 4px 4px;
   }
 
-  #navText {
+  #navText, #savedArticles {
     color: white;
     font-size: 18px;
+    background-color: black;
 
   }
 
@@ -48,6 +49,18 @@
     background-color: darksalmon;
     color: white;
   }
+  
+  #saveButton {
+    background-color: darksalmon;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 15px;
+    font-family: cursive;
+    text-shadow: #444 0 2px 2px;
+  }
+
+
 
   #scrapeSource {
     font-size: 32px;
@@ -56,3 +69,37 @@
     font-family: cursive;
     color: peachpuff;
   }
+
+  panel {
+    border: solid 1px;
+    border-color: dimgray;
+ 
+  }
+
+  .panel-heading {
+    background-color: dimgrey;
+    color: white;
+    font-size: 32px;
+    font-family: Arial, Helvetica, sans-serif;
+   
+
+  }
+
+   .panel-body {
+    font-size: 32px;
+    font-family: Arial, Helvetica, sans-serif;
+
+  }
+
+  p {
+    font-style: italic;
+    font-size: 24px;
+  }
+
+  #ptitle, a {
+    background-color: dimgray;
+    color: white
+  }
+
+
+  

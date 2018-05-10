@@ -1,19 +1,16 @@
-   <div class="container">
+
+
  {{#each articles}}
-<div class="panel panel-primary"></div>
-<div class="panel-heading"> <a href={{this.link}}>{{this.title}}</a>
+<div class="panel">
+<div class="panel-heading"> <a href={{this.link}}id="ptitle">{{this.title}}</a>
 </div>
- >
 <div class="panel-body">
   <p> {{this.summary}}</p>
- 
-  <br>
-  <br>
-  <button type="button" class="btn btn-lg" data-id={{this._id}}>Save Article</button>
+  <button type="button" id="saveButton" data-id={{this._id}}>Save Article</button>
 </div>
-</div></div>
+</div>
 {{/each}}
- </div>
+
 
 
 

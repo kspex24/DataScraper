@@ -53,8 +53,20 @@ app.get("/", function(req, res) {
   });
 });
 
+app.get("/saved", function(req, res) {
+  db.Article
+  .find({saved: true})
+  .then(function(dbArticle) {
+    res.render('saved', { articles: dbArticle } );
+  })
+  .catch(function(err) {
+    res.json(err);
+  });
+});
+
 
 //GET route for scraping the news section of the Washingtonian website
+
 app.get("/scrape", function (req, res) {
 
   //Grab the body of html with request
@@ -82,7 +94,6 @@ app.get("/scrape", function (req, res) {
     });
 
 
-
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result)
         .then(function (dbArticle) {
@@ -94,10 +105,12 @@ app.get("/scrape", function (req, res) {
           return res.json(err);
         });
     });
+
   })
 
-  // // If scrape is successful save Article, send a message to the client
-  res.send("Scrape Complete");
+  // Tell the browser that we finished scraping the text
+      res.redirect("/");
+
 });
 
 

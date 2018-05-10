@@ -1,0 +1,53 @@
+
+
+ {{#each articles}} {{#if saved}}
+<div class="panel">
+<div class="panel-heading"> <a href={{this.link}}id="ptitle">{{this.title}}</a>
+  <button type="button"  class="pull-right" id="noteButton" data-id={{this._id}}>Add Note</button>
+<button type="button"  class="pull-right" id="delButton" data-id={{this._id}}>Remove</button>
+</div>
+<div class="panel-body">
+  <p> {{this.summary}}</p>
+ 
+</div>
+</div>
+ {{/if}} {{/each}}
+
+
+<script type="text/javascript">
+  //Click event to show modal
+ $('#myModal').modal('show');
+
+    //Modal for adding notes
+  
+                    
+ <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Add Note</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+
+                <div class="md-form">
+                    <i class="fa fa-pencil prefix grey-text"></i>
+                    <textarea type="text" id="form8" class="md-textarea form-control" rows="4"></textarea>
+                    <label data-error="wrong" data-success="right" for="form8">Notes:</label>
+                </div>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-unique" id="saveNote">Save <i class="fa fa-paper-plane-o ml-1"></i></button>
+            </div>
+        </div>
+    </div>
+</div> 
+
+
+         
+
+
+</script>

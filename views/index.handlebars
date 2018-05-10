@@ -3,76 +3,21 @@
  {{#each articles}}
 <div class="panel">
 <div class="panel-heading"> <a href={{this.link}}id="ptitle">{{this.title}}</a>
+ <button type="button" class="pull-right" id="saveButton" data-id={{this._id}}>Save Article</button>
 </div>
 <div class="panel-body">
   <p> {{this.summary}}</p>
-  <button type="button" id="saveButton" data-id={{this._id}}>Save Article</button>
+ 
 </div>
 </div>
 {{/each}}
 
 
 
-
-
-{{!--
-<div id="eaten">
-  <h2>Devoured Burgers:</h2>
-  <ol>
-    {{#each burgers}} {{#if devoured}}
-    <li>
-      {{burger_name}}
-    </li>
-    {{/if}} {{/each}}
-  </ol>
-</div>
-
-
 <script type="text/javascript">
-  //Click event to change devoured to true and move to right side of screen
-  $(function () {
-    $(".change-savedd").on("click", function (event) {
-      var id = $(this).data("id");
-      var newSaved = $(this).data("newsaved");
+  //Click event to show modal
+ 
+         
 
-      var newSavedState = {
-        saved: newSaved
-      };
 
-      //       // Send the PUT request.
-      $.ajax("/api/burgers/" + id, {
-        type: "PUT",
-        data: newDevouredState
-      }).then(
-        function () {
-          console.log("changed devoured to", newDevoured);
-          // Reload the page to get the updated list
-          location.reload();
-        }
-      );
-    });
-
-    //Click event to submit the new burger with devoured = false to the left side of screen
-    $(".create-form").on("submit", function (event) {
-
-      event.preventDefault();
-
-      var newBurger = {
-        burger_name: $("#ca").val().trim(),
-        devoured: 0
-      };
-
-      //       // Send the POST request.
-      $.ajax("/api/burgers", {
-        type: "POST",
-        data: newBurger
-      }).then(
-        function () {
-          console.log("created new burger");
-          location.reload();
-        }
-      );
-    });
-  });
-
-</script> --}}
+</script>

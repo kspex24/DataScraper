@@ -69,9 +69,7 @@
   panel {
     border: solid 10px;
     border-color: dimgray;
-    padding: 10px;
- 
- 
+    padding: 10px; 
   }
 
   .panel-heading {
@@ -80,9 +78,6 @@
     font-size: 32px;
     font-family: Arial, Helvetica, sans-serif;
     padding: 10px;
-  
-   
-
   }
 
    .panel-body {

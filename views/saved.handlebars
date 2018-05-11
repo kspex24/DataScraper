@@ -1,19 +1,18 @@
-
-
  {{#each articles}} {{#if saved}}
 <div class="panel">
-<div class="panel-heading"> <a href={{this.link}}id="ptitle">{{this.title}}</a>
-  <button type="button"  class="pull-right" data-toggle="modal" data-target="#myModal" id="noteButton" data-id={{this._id}}>Add Note</button>
-<button type="button"  class="pull-right" id="delButton" data-id={{this._id}}>Remove</button>
+  <div class="panel-heading">
+    <a href={{this.link}}id="ptitle">{{this.title}}</a>
+    <button type="button" class="pull-right" data-toggle="modal" data-target="#myModal" id="noteButton" data-id={{this._id}}>Add Note</button>
+    <button type="button" class="pull-right" id="delButton" data-id={{this._id}}>Remove</button>
+  </div>
+  <div class="panel-body">
+    <p> {{this.summary}}</p>
+
+  </div>
 </div>
-<div class="panel-body">
-  <p> {{this.summary}}</p>
- 
-</div>
-</div>
- {{/if}} {{/each}}
-  
-                    
+{{/if}} {{/each}}
+
+
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

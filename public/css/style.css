@@ -45,7 +45,7 @@
   }
   
  
- #scraperBtn, #saveButton, #noteButton, #delButton {
+ #scraperBtn, #saveButton, #noteButton, #delButton, #submitNote, #closeNote, #saveArticle {
     background-color: darksalmon;
     color: white;
     font-size: 20px;

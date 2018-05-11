@@ -3,7 +3,7 @@
  {{#each articles}}
 <div class="panel">
 <div class="panel-heading"> <a href={{this.link}}id="ptitle">{{this.title}}</a>
- <button type="button" class="pull-right" id="saveButton" data-id={{this._id}}>Save Article</button>
+ <button type="button" class="pull-right" data-toggle="modal" data-target="#myModal2" id="saveButton" data-id={{this._id}}>Save Article</button>
 </div>
 <div class="panel-body">
   <p> {{this.summary}}</p>
@@ -14,10 +14,24 @@
 
 
 
-<script type="text/javascript">
-  //Click event to show modal
- 
-         
 
+<div class="container">
 
-</script>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Article Saved</h4>
+        </div>
+        <div class="modal-body">
+          <p>This article has been saved.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-lg" id="saveArticle" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

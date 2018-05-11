@@ -86,7 +86,7 @@ app.put("/save/:id", function(req, res) {
   });
 });
 
-// Route for removing a saved article
+// Route for changing a saved article to unsaved - remove button
 app.put("/articles/:id", function(req, res) {
   db.Article
   .findOneAndUpdate({ _id: req.params.id }, { $set: {saved: false }})

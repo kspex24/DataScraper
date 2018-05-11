@@ -22,13 +22,10 @@ $(document).on("click", "#saveButton", function() {
 });
 
 
-//Click event to  launch modal to add a note
-// $(document).on("click", "#noteButton", function() {
-//   $('#myModal').modal('show');
-// })
+
 //Click event to save note to database
 
-$(document).on("click", "#saveNote", function() {
+$(document).on("click", "#submitNote", function() {
   // Grab the id associated with the article from the submit button
   var thisId = $(this).attr("data-id");
 
@@ -38,22 +35,17 @@ $(document).on("click", "#saveNote", function() {
     url: "/notes/" + thisId,
     data: {
       // Value taken from title input
-      title: $("#titleinput").val(),
+      title: $("#titleInput").val(),
       // Value taken from note textarea
-      body: $("#bodyinput").val()
+      body: $("#bodyInput").val()
     }
   })
     // With that done
     .then(function(data) {
       // Log the response
       console.log(data);
-      // Empty the notes section
-      $("#notes").empty();
     });
 
-  // Also, remove the values entered in the input and textarea for note entry
-  $("#titleinput").val("");
-  $("#bodyinput").val("");
 });
 
   })

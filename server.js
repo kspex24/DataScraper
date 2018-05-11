@@ -62,49 +62,10 @@ app.get("/saved", function (req, res) {
     })
 });
 
-// app.get("/articles", function (req, res) {
-//   db.Note
-//     .find({})
-//     .then(function (dbNote) {
-//       res.render('notes', { notes: dbNote });
-//     })
-//     .catch(function (err) {
-//       res.json(err);
-//     });
-// });
-
-
 // Route for saving an article
-app.put("/save/:id", function(req, res) {
+app.put("/save/:id", function (req, res) {
   db.Article
-  .findOneAndUpdate({ _id: req.params.id }, { saved: true })
-  .then(function(dbArticle) {
-    res.json(dbArticle);
-  })
-  .catch(function(err) {
-    res.json(err);
-  });
-});
-
-// Route for changing a saved article to unsaved - remove button
-app.put("/articles/:id", function(req, res) {
-  db.Article
-  .findOneAndUpdate({ _id: req.params.id }, { $set: {saved: false }})
-  .then(function(dbArticle) {
-    res.json(dbArticle);
-  })
-  .catch(function(err) {
-    res.json(err);
-  });
-});
-
-// Route for saving/updating an Article's associated Note
-app.post("/articles/:id", function (req, res) {
-  // Create a new note and pass the req.body to the entry
-  db.Note.create(req.body)
-    .then(function (dbNote) {
-      return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
-    })
+    .findOneAndUpdate({ _id: req.params.id }, { $set: { saved: true } })
     .then(function (dbArticle) {
       res.json(dbArticle);
     })
@@ -113,16 +74,32 @@ app.post("/articles/:id", function (req, res) {
     });
 });
 
-app.post("/saved", function (req, res) {
+// Route for changing a saved article to unsaved - remove button
+app.put("/articles/:id", function (req, res) {
   db.Article
-    .update({ saved: true })
+    .findOneAndUpdate({ _id: req.params.id }, { $set: { saved: false } })
     .then(function (dbArticle) {
-      res.render('saved', { articles: dbArticle });
+      res.json(dbArticle);
     })
     .catch(function (err) {
       res.json(err);
     });
 });
+
+// Route for grabbing a specific Article by id, populate it with it's note
+app.get("/articles/:id", function (req, res) {
+  // Using the id passed in the id parameter
+  db.Article.findOne({ _id: req.params.id })
+    // ..and populate all of the notes associated with it
+    .populate("note")
+    .then(function (dbArticle) {
+      res.json(dbArticle);
+    })
+    .catch(function (err) {
+      res.json(err);
+    });
+});
+
 
 //GET route for scraping the news section of the Washingtonian website
 
@@ -169,13 +146,14 @@ app.get("/scrape", function (req, res) {
 
   // Return to main page once finished scraping the text
   res.redirect("/");
+  $('#myModal2').modal('show');
 
 });
 
 
 // // Route for getting all Articles from the db
 app.get("/articles", function (req, res) {
-//   //   // Grab every document in the Articles collection
+  //   //   // Grab every document in the Articles collection
   db.Article.find({})
     .then(function (dbArticle) {
 

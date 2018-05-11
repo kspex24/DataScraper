@@ -38,7 +38,7 @@ mongoose.connect(MONGODB_URI);
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapeArticles";
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/scrapeArticles");
+// mongoose.connect("mongodb://localhost/scrapeArticles");
 
 // Routes
 app.get("/", function (req, res) {

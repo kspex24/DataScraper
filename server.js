@@ -4,12 +4,11 @@ var mongoose = require("mongoose");
 var cheerio = require("cheerio");
 var request = require("request");
 var logger = require("morgan");
+var PORT = process.env.PORT || 3000;
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapeArticles";
 
 // Require all models
 var db = require("./models");
-
-var PORT = process.env.PORT || 8080;
-
 
 // Initialize Express
 var app = express();
@@ -29,15 +28,15 @@ app.use(bodyParser.urlencoded({ extended: true })); //body-parser handles form s
 // parse application/json
 app.use(bodyParser.json());
 
-
+require('dotenv').config()
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scrapeArticles";
 
-// Connect to the Mongo DB
+
+// // Connect to the Mongo DB
 // mongoose.connect("mongodb://localhost/scrapeArticles");
 
 // Routes
@@ -63,15 +62,40 @@ app.get("/saved", function (req, res) {
     })
 });
 
-app.get("/articles", function (req, res) {
-  db.Note
-    .find({})
-    .then(function (dbNote) {
-      res.render('notes', { notes: dbNote });
-    })
-    .catch(function (err) {
-      res.json(err);
-    });
+// app.get("/articles", function (req, res) {
+//   db.Note
+//     .find({})
+//     .then(function (dbNote) {
+//       res.render('notes', { notes: dbNote });
+//     })
+//     .catch(function (err) {
+//       res.json(err);
+//     });
+// });
+
+
+// Route for saving an article
+app.put("/save/:id", function(req, res) {
+  db.Article
+  .findOneAndUpdate({ _id: req.params.id }, { saved: true })
+  .then(function(dbArticle) {
+    res.json(dbArticle);
+  })
+  .catch(function(err) {
+    res.json(err);
+  });
+});
+
+// Route for removing a saved article
+app.put("/articles/:id", function(req, res) {
+  db.Article
+  .findOneAndUpdate({ _id: req.params.id }, { $set: {saved: false }})
+  .then(function(dbArticle) {
+    res.json(dbArticle);
+  })
+  .catch(function(err) {
+    res.json(err);
+  });
 });
 
 // Route for saving/updating an Article's associated Note
@@ -118,7 +142,7 @@ app.get("/scrape", function (req, res) {
       // add text, summary and href of every link
 
       var title = $(this).children("h4").text();
-      var link = $("h4").children().attr("href");
+      var link = $(this).children("a").attr("href");
       var summary = $(this).children("div.wash-sidebar__item-deck").text();
 
       // Save results in an object and push into the results array 
@@ -150,18 +174,18 @@ app.get("/scrape", function (req, res) {
 
 
 // // Route for getting all Articles from the db
-// app.get("/articles", function (req, res) {
+app.get("/articles", function (req, res) {
 //   //   // Grab every document in the Articles collection
-//   db.Article.find({})
-//     .then(function (dbArticle) {
+  db.Article.find({})
+    .then(function (dbArticle) {
 
-//       res.json(dbArticle);
-//     })
-//     .catch(function (err) {
+      res.json(dbArticle);
+    })
+    .catch(function (err) {
 
-//       res.json(err);
-//     });
-// });
+      res.json(err);
+    });
+});
 
 // // // Route for getting a specific Article by id, populate it with it's note
 // app.get("/articles/:id", function (req, res) {

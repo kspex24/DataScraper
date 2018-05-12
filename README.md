@@ -15,5 +15,7 @@ What is the goal of this project?
 
 The goal of this project is to continue gaining experience with JavaScript, jQuery, HTML/ CSS, Express, Node, Handlebars and Mongo.
 
-
+<p>
+    <img src="https://github.com/kspex24/liri-node-app/blob/master/images/lirinode1.png">
+</p>
 

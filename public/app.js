@@ -10,8 +10,9 @@ $(document).ready(function () {
     }
   });
   // Click event to mark an article as saved//NOT WORKING!
-  $(document).on("click", "#saveButton", function () {
+  $(document).on("click", "#saveArticle", function () {
     event.preventDefault();
+    // $('#myModal').modal('show');
     var id = $(this).attr("data-id");
 
     $.ajax({
@@ -23,7 +24,7 @@ $(document).ready(function () {
       .then(function (data) {
 
         console.log(data);
-        $('#myModal').modal('show');
+      
 
         location.reload();
       });
@@ -60,7 +61,7 @@ $(document).ready(function () {
     var id = $(this).attr("data-id");
 
     $.ajax({
-      method: "DELETE",
+      method: "PUT",
       url: "/articles/" + id,
       data: {
       }

@@ -23,7 +23,6 @@ app.use(express.static("public")) //express makes public folder the static direc
 
 //Configure middleware
 app.use(logger("dev"));
-
 app.use(bodyParser.urlencoded({ extended: true })); //body-parser handles form submissions
 // parse application/json
 app.use(bodyParser.json());
@@ -36,10 +35,7 @@ mongoose.connect(MONGODB_URI);
 // If deployed, use the deployed database. Otherwise use the local mongoHeadlines database
 
 
-// // Connect to the Mongo DB
-// mongoose.connect("mongodb://localhost/scrapeArticles");
-
-// Routes
+// Route to display all articles
 app.get("/", function (req, res) {
   db.Article
     .find({})
@@ -50,7 +46,7 @@ app.get("/", function (req, res) {
       res.json(err);
     });
 });
-
+// Route for displaying saved articles
 app.get("/saved", function (req, res) {
   db.Article
     .find({ saved: true })
@@ -62,8 +58,8 @@ app.get("/saved", function (req, res) {
     })
 });
 
-// Route for saving an article
-app.put("/save/:id", function (req, res) {
+// Route for saving a specific article
+app.put("/saved/:id", function (req, res) {
   db.Article
     .findOneAndUpdate({ _id: req.params.id }, { $set: { saved: true } })
     .then(function (dbArticle) {
@@ -107,20 +103,21 @@ app.get("/scrape", function (req, res) {
 
   //Grab the body of html with request
 
-  request("https://www.washingtonian.com/sections/news/", function (error, response, html) {
-    //load cheerio and save to $ variable
+  request("https://www.washingtonpost.com/", function(error, response, html) {
+
+    // Load the HTML into cheerio and save it to a variable
+    // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
     var $ = cheerio.load(html);
-
-
-    $("div.wash-sidebar__item").each(function (i, element) {
-
-      // Save an empty result object
-      var result = [];
-      // add text, summary and href of every link
-
-      var title = $(this).children("h4").text();
-      var link = $(this).children("a").attr("href");
-      var summary = $(this).children("div.wash-sidebar__item-deck").text();
+  
+    // An empty array to save the data that we'll scrape
+    var result = [];
+    // Select each elements to scrape
+    $("div.no-skin.flex-item.flex-stack").each(function(i, element) {
+  
+     
+      var title = $(this).children("div.headline").text();   
+      var link =$(this).children("div.headline").children("a").attr("href");       
+      var summary = $(this).children("div.blurb").text();
 
       // Save results in an object and push into the results array 
       result.push({
@@ -146,7 +143,7 @@ app.get("/scrape", function (req, res) {
 
   // Return to main page once finished scraping the text
   res.redirect("/");
-  $('#myModal2').modal('show');
+  // $('#myModal2').modal('show');
 
 });
 
@@ -165,41 +162,6 @@ app.get("/articles", function (req, res) {
     });
 });
 
-// // // Route for getting a specific Article by id, populate it with it's note
-// app.get("/articles/:id", function (req, res) {
-// //   // Using the id passed in the id parameter, prepare a query that finds the matching one in the db...
-//   db.Article.findOne({ _id: req.params.id })
-// //     //  populate the note associated with it
-//     .populate("note")
-//     .then(function (dbArticle) {
-// //       // If Article with the given id exists, send it back to the client
-//       res.json(dbArticle);
-//     })
-//     .catch(function (err) {
-// //       // If an error occurred, send it to the client
-//       res.json(err);
-//     });
-// });
-
-
-
-// // Route for saving/updating an Article's associated Note
-// app.post("/articles/:id", function (req, res) {
-//   // Create a new note and pass the req.body to the entry
-//   db.Note.create(req.body)
-//     .then(function (dbNote) {
-
-//       return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
-//     })
-//     .then(function (dbArticle) {
-//       // If we were able to successfully update an Article, send it back to the client
-//       res.json(dbArticle);
-//     })
-//     .catch(function (err) {
-//       // If an error occurred, send it to the client
-//       res.json(err);
-//     });
-// });
 
 
 
